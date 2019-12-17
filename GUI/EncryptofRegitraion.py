@@ -7,13 +7,14 @@ def EncryptionPassword(NameKey):
         password = pickle.load(usrs_file)
         username = NameKey #The user name of login 
         userpasswd = password.get(NameKey) #The user password of login
+        print(username,userpasswd)
         salt = os.urandom(32) #Prepare to change origin string password to 32-bit password
         key = hashlib.pbkdf2_hmac('sha256',userpasswd.encode('utf-8'),salt,100000)
         users[username] = {
             'salt' : salt,
             'key' : key
         }
-    print(users[username]['salt'])
+    print(users[username]['key'])
 
 
     
