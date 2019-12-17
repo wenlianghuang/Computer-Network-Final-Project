@@ -3,6 +3,7 @@ from tkinter import messagebox
 import pickle
 #EncryptofRegitration.py with EncryptionPassword function
 from EncryptofRegitraion import EncryptionPassword
+from OnlineGui import OnlineGuiWindow
 
 #Build a window with tkinter
 window = tk.Tk()
@@ -34,10 +35,12 @@ entry_usr_passwd.place(x=150,y=80)
 def usr_login():
     usrs_name = var_usr_name.get()
     usrs_passwd = var_usr_passwd.get()
+
     #If the "*.pickle" file is already done
     try:
         with open('usrs_info.pickle','rb') as usrs_file:
             usrs_info = pickle.load(usrs_file)
+
     #else
     except FileNotFoundError:
         with open('usrs_info.pickle','wb') as usrs_file:
@@ -47,6 +50,7 @@ def usr_login():
     if usrs_name in usrs_info:
         if (usrs_passwd == usrs_info[usrs_name]):
             tk.messagebox.showinfo(title="Login",message="Successfully login")
+            window.quit()
         else:
             tk.messagebox.showinfo(title="Login",message="Error, Please sign login again")
     else:
@@ -54,6 +58,7 @@ def usr_login():
         # 'is_signed' is 'true'
         if(is_signed_up):
             usr_signup()
+        
 #Sign up 
 def usr_signup():
     def Registration_signup():
@@ -96,8 +101,16 @@ def usr_signup():
     entry_new_conf_passwd = tk.Entry(window_signup,textvariable=new_passwd_confirm,show="*")
     entry_new_conf_passwd.place(x=150,y=90)
 
-    btn_commfirm_sign_up = tk.Button(window_signup,text="Submmit",command=Registration_signup)
+    btn_commfirm_sign_up = tk.Button(window_signup,text="Submit",command=Registration_signup)
     btn_commfirm_sign_up.place(x=150,y=130)
+    
+    #destroy 'window_signup'
+    def signup_exitquit():
+        window_signup.destroy()
+
+    btn_exit = tk.Button(window_signup,text="Exit",command=signup_exitquit)
+    btn_exit.place(x=250,y=130)
+
 #Exit if all the login is finish 
 def exitquit():
     if (var_usr_name.get() == "" or var_usr_passwd.get() == ""):
@@ -116,7 +129,8 @@ btn_exit = tk.Button(window,text="Exit",command=exitquit)
 btn_exit.place(x=300,y=200)
 
 window.mainloop()
-window.quit()
+OnlineGuiWindow(var_usr_name)
+#window.quit()
 
 #EncryptionPassword(var_usr_name.get())
 
