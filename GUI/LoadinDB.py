@@ -1,21 +1,22 @@
 import pymongo
 import pickle
 import hashlib
+from EncryptofRegitraion import EncryptionPassword
 #Connect to the remote dongodb 
 def LoadinDBFunction(username,userpassword):
-    hashupd = hashlib.sha256()
-    hashupd.update(userpassword.encode('utf-8'))
-    userpassword = hashupd.hexdigest()
-    print(userpassword)
-    myclient = pymongo.MongoClient("mongodb+srv://WenLiangMatt:wenliang75@cluster0-ejyss.mongodb.net/test&authMechanism=SCRAM-SHA-256")
+    #Encrypted password
+    encryptedpw = EncryptionPassword(userpassword)
+    
+    #myclient = pymongo.MongoClient("mongodb+srv://WenLiangMatt:wenliang75@cluster0-ejyss.mongodb.net/test&authMechanism=SCRAM-SHA-256")
+    myclient = pymongo.MongoClient("mongodb+srv://WenLiangMatt:wenliang75@cluster0-ejyss.mongodb.net/test")
     print(myclient.list_database_names())
 
     #Get table from db
     mydb = myclient.MattDB
     print(mydb.list_collection_names())
-    print(mydb['WenLiang']['username'])
     mycol = mydb['WenLiang']
-    mydict = {'username':username,'userpassword':userpassword}
+    #mydict = {'username':username,'userpassword':userpassword}
+    mydict = {'username':username,'userpassword':encryptedpw}
     mycol.insert_one(mydict)
     
     #with open('./usrs_info.pickle','rb') as usr_file:        
