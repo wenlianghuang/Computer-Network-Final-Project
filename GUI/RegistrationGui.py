@@ -1,10 +1,11 @@
 import tkinter as tk 
 from tkinter import messagebox
 import pickle
-#EncryptofRegitration.py with EncryptionPassword function
 from EncryptofRegitraion import EncryptionPassword
+from EncryptofRegitraion import EncryptionKey
 from OnlineGui import OnlineGuiWindow
-
+from LoadinDB import LoadinDBFunction 
+from clientchartGUI import ChartRoomOnline
 #Build a window with tkinter
 window = tk.Tk()
 window.title('Registration')
@@ -50,7 +51,10 @@ def usr_login():
     if usrs_name in usrs_info:
         if (usrs_passwd == usrs_info[usrs_name]):
             tk.messagebox.showinfo(title="Login",message="Successfully login")
-            window.quit()
+            #window.quit()
+            window.destroy()
+            OnlineGuiWindow(usrs_name)
+            #ChartRoomOnline(usrs_name)
         else:
             tk.messagebox.showinfo(title="Login",message="Error, Please sign login again")
     else:
@@ -78,6 +82,8 @@ def usr_signup():
             with open('usrs_info.pickle','wb') as usrs_file:
                 pickle.dump(exist_usr_info,usrs_file)
             tk.messagebox.showinfo('Welcome', 'You have successfully signed up!')
+            #Load the username and password to the DB
+            LoadinDBFunction(nn,np)
             window_signup.destroy()
 
 
@@ -115,9 +121,9 @@ def usr_signup():
 def exitquit():
     if (var_usr_name.get() == "" or var_usr_passwd.get() == ""):
         pass
-    else:
-        EncryptionPassword(var_usr_name.get())
-    window.quit()
+    #else:
+    #    EncryptionPassword(var_usr_name.get())
+    window.destroy()
 
 btn_login = tk.Button(window,text="Login",command=usr_login)
 btn_login.place(x=100,y=200)
@@ -129,7 +135,9 @@ btn_exit = tk.Button(window,text="Exit",command=exitquit)
 btn_exit.place(x=300,y=200)
 
 window.mainloop()
-OnlineGuiWindow(var_usr_name)
+
+#OnlineGuiWindow(var_usr_name.get())
+
 #window.quit()
 
 #EncryptionPassword(var_usr_name.get())
