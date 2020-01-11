@@ -17,10 +17,7 @@ def main():
     
     #asks for user name
     name=raw_input("\33[34m\33[1m CREATING NEW ID:\n Enter username: \33[0m")
-
-    
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
     s.settimeout(2)
     
     # connecting host

@@ -5,7 +5,12 @@ from EncryptofRegitraion import EncryptionPassword
 from EncryptofRegitraion import EncryptionKey
 from OnlineGui import OnlineGuiWindow
 from LoadinDB import LoadinDBFunction 
-from clientchartGUI import ChartRoomOnline
+from MattClientChat import MattClient
+#from clientchartGUI import ChartRoomOnline
+import sys
+port1 = sys.argv[1]
+port2 = sys.argv[2]
+
 #Build a window with tkinter
 window = tk.Tk()
 window.title('Registration')
@@ -53,7 +58,8 @@ def usr_login():
             tk.messagebox.showinfo(title="Login",message="Successfully login")
             #window.quit()
             window.destroy()
-            OnlineGuiWindow(usrs_name)
+            #20200109OnlineGuiWindow(usrs_name,port1,port2)
+            MattClient(usrs_name)
             #ChartRoomOnline(usrs_name)
         else:
             tk.messagebox.showinfo(title="Login",message="Error, Please sign login again")

@@ -2,8 +2,9 @@ import tkinter as tk
 from tkinter import *
 import pickle
 from tkinter import ttk
-from clientchartGUI import ChartRoomOnline
-def OnlineGuiWindow(NameKey):
+#from clientchartGUI import ChartRoomOnline
+from SocketChatRoom import SocketChatRoomGUI
+def OnlineGuiWindow(NameKey,port1,port2):
     
     window = tk.Tk()
     window.title("Online Gui")
@@ -37,6 +38,8 @@ def OnlineGuiWindow(NameKey):
         def Entry_pressed(event):
             input_get = input_field.get()
             #print(input_get) #string
+            #print(type(port1),type(port2))
+            SocketChatRoomGUI(input_get,port1,port2) 
             messages.insert(INSERT,'%s\n' %input_get)
             #ChartRoomOnline(NameKey,input_get)
             input_user.set('')
